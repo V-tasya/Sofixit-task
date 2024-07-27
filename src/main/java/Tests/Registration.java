@@ -43,5 +43,6 @@ public class Registration extends Driver {
         System.out.println("Test 1");
         String loggedIn = getDriver().findElement(By.xpath("//p[text()='Your account was created successfully. You are now logged in.']")).getText();
         System.out.println(loggedIn);
+        System.out.println();
     }
 }

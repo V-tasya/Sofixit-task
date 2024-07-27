@@ -5,7 +5,7 @@
         <classes>
             <class name="Tests.Driver"></class>
             <class name="Tests.Registration"></class>
-            <class name="Tests.TransferFounds"></class>
+            <class name="Tests.TransferFunds"></class>
         </classes>
     </test>
 </suite>
