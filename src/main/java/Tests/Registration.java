@@ -4,8 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
-import java.time.Instant;
-import java.util.ArrayList;
 
 public class Registration extends Driver {
     private static final String MOCK_INPUT = "Test";
@@ -24,9 +22,11 @@ public class Registration extends Driver {
         for (String webElement: webElements) {
             if(webElement.equals("customer.username")) {
                 WebElement userName = getDriver().findElement(By.id(webElement));
+                userName.clear();
                 userName.sendKeys(Global.getUsername());
             } else {
                 WebElement firstName = getDriver().findElement(By.id(webElement));
+                firstName.clear();
                 firstName.sendKeys(MOCK_INPUT);
             }
         }
@@ -38,9 +38,9 @@ public class Registration extends Driver {
         Thread.sleep(3000);
     }
 
-    @Test(priority = 2)
+    @Test(priority = 2, dependsOnMethods = "registration")
     public void printText() {
-        System.out.println("Test 1");
+        System.out.println("Test 1 'Registration'");
         String loggedIn = getDriver().findElement(By.xpath("//p[text()='Your account was created successfully. You are now logged in.']")).getText();
         System.out.println(loggedIn);
         System.out.println();

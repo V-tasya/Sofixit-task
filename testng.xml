@@ -3,9 +3,10 @@
 <suite name="All Test Suite">
     <test verbose="2" preserve-order="true" name="C:/Users/37529/Selenium_projects/Sofixit_recrutation_task">
         <classes>
-            <class name="Tests.Driver"></class>
             <class name="Tests.Registration"></class>
             <class name="Tests.TransferFunds"></class>
+            <class name="Tests.BillPay"></class>
+            <class name="Tests.RequestLoan"></class>
         </classes>
     </test>
 </suite>
