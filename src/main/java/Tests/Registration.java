@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
+import java.util.concurrent.TimeUnit;
+
 
 public class Registration extends Driver {
     private static final String MOCK_INPUT = "Test";
@@ -12,15 +14,15 @@ public class Registration extends Driver {
     public void registration() throws InterruptedException {
         WebElement register = getDriver().findElement(By.xpath("//a[@href='register.htm']"));
         register.click();
-        Thread.sleep(3000);
+        getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
-        String[] webElements = new String[] {"customer.firstName", "customer.lastName", "customer.address.street",
+        String[] webElements = new String[]{"customer.firstName", "customer.lastName", "customer.address.street",
                 "customer.address.city", "customer.address.state", "customer.address.zipCode", "customer.phoneNumber",
                 "customer.ssn", "customer.username", "customer.password", "repeatedPassword"
         };
 
-        for (String webElement: webElements) {
-            if(webElement.equals("customer.username")) {
+        for (String webElement : webElements) {
+            if (webElement.equals("customer.username")) {
                 WebElement userName = getDriver().findElement(By.id(webElement));
                 userName.clear();
                 userName.sendKeys(Global.getUsername());
@@ -31,11 +33,11 @@ public class Registration extends Driver {
             }
         }
 
-        Thread.sleep(3000);
+        getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
         WebElement regist = getDriver().findElement(By.xpath("//input[@type='submit' and @value='Register']"));
         regist.click();
-        Thread.sleep(3000);
+        getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
     @Test(priority = 2, dependsOnMethods = "registration")

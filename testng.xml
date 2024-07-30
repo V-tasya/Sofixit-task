@@ -7,6 +7,7 @@
             <class name="Tests.TransferFunds"></class>
             <class name="Tests.BillPay"></class>
             <class name="Tests.RequestLoan"></class>
+            <class name="Tests.FindTransaction"></class>
         </classes>
     </test>
 </suite>

@@ -2,40 +2,45 @@ package Tests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 public class BillPay extends Driver {
 
     private String MOCK_INPUT = "Test";
 
     @Test(priority = 5, dependsOnMethods = "Tests.TransferFunds.transferFunds")
-    public void loggIn() throws InterruptedException {
+    public void loggIn() {
         WebElement login = getDriver().findElement(By.xpath("//input[@type='text' and @class='input' and @name='username']"));
         login.clear();
         login.sendKeys(Global.getUsername());
-        Thread.sleep(3000);
+        getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
         WebElement password = getDriver().findElement(By.xpath("//input[@type='password' and @class='input' and @name='password']"));
         password.clear();
         password.sendKeys(MOCK_INPUT);
-        Thread.sleep(3000);
+        getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
         WebElement logIn = getDriver().findElement(By.xpath("//input[@type='submit' and @class='button' and @value='Log In']"));
         logIn.click();
-        Thread.sleep(3000);
+        getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
         System.out.println("Test 3 'Bill Pay'");
     }
 
     @Test(priority = 6, dependsOnMethods = "loggIn")
-    public void Billpay() throws InterruptedException {
+    public void Billpay() {
         String[] inputs = new String[]{"12", "Test", " ", "1a", "Test1", "*", "https://www.goodhousekeeping.com/life/pets/g4531/cutest-dog-breeds/"};
         String[] fields = new String[]{"payee.name", "payee.address.street", "payee.address.city", "payee.address.state",
                 "payee.address.zipCode", "payee.phoneNumber", "payee.accountNumber", "verifyAccount", "amount"};
 
         WebElement billpay = getDriver().findElement(By.xpath("//a[@href='billpay.htm']"));
         billpay.click();
-        Thread.sleep(3000);
+        getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
         for (String input : inputs) {
             for (String field : fields) {
@@ -46,26 +51,27 @@ public class BillPay extends Driver {
 
             WebElement sendPayment = getDriver().findElement(By.xpath("//input[@value='Send Payment']"));
             sendPayment.click();
-            Thread.sleep(3000);
+            getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
+            var wait = new WebDriverWait(getDriver(), Duration.ofSeconds(30));
             if (input.equals("12")) {
-                String text = getDriver().findElement(By.xpath("//h1[@class='title' and text()='Bill Payment Complete']")).getText();
-                System.out.println("For " + input + " - " + text);
+                WebElement text = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h1[@class='title' and text()='Bill Payment Complete']")));
+                System.out.println("For " + input + " - " + text.getText());
             } else if (input.equals(" ")) {
-                String text2 = getDriver().findElement(By.id("validationModel-amount-empty")).getText();
-                System.out.println("For " + input + " - " + text2);
+                WebElement text = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("validationModel-amount-empty")));
+                System.out.println("For " + input + " - " + text.getText());
             } else if (input.equals("1a")) {
-                String text3 = getDriver().findElement(By.xpath("//p[@class='error' and text()='An internal error has occurred and has been logged.']")).getText();
-                System.out.println("For " + input + " - " + text3);
+                WebElement text = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[@class='error' and text()='An internal error has occurred and has been logged.']")));
+                System.out.println("For " + input + " - " + text.getText());
             } else {
-                String text4 = getDriver().findElement(By.id("validationModel-account-invalid")).getText();
-                System.out.println("For " + input + " - " + text4);
+                WebElement text = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("validationModel-account-invalid")));
+                System.out.println("For " + input + " - " + text.getText());
             }
 
             billpay = getDriver().findElement(By.xpath("//a[@href='billpay.htm']"));
             billpay.click();
-            Thread.sleep(3000);
-            System.out.println();
+            getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         }
+
     }
 }
