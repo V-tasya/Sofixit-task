@@ -2,8 +2,11 @@ package Tests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class RequestLoan extends Driver {
@@ -34,7 +37,8 @@ public class RequestLoan extends Driver {
         String[] inputs = new String[]{"12", "Test", " ", "1a", "Test1", "*", "https://www.goodhousekeeping.com/life/pets/g4531/cutest-dog-breeds/"};
         String[] fields = new String[]{"amount", "downPayment"};
         for (String input : inputs) {
-            WebElement requestLoan = getDriver().findElement(By.xpath("//a[@href='requestloan.htm' and text()='Request Loan']"));
+            var wait =new WebDriverWait(getDriver(), Duration.ofSeconds(30));
+            WebElement requestLoan = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@href='requestloan.htm' and text()='Request Loan']")));
             requestLoan.click();
 
             for (String field : fields) {
@@ -42,10 +46,9 @@ public class RequestLoan extends Driver {
                 element.clear();
                 element.sendKeys(input);
             }
-
-            WebElement applyNow = getDriver().findElement(By.xpath("//input[@type='button' and @class='button' and @value='Apply Now']"));
+            //var wait = new WebDriverWait(getDriver(), Duration.ofSeconds(30));
+            WebElement applyNow = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@type='button' and @class='button' and @value='Apply Now']")));
             applyNow.click();
-            getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
             Thread.sleep(3000);
 
             if (input.equals("12")) {

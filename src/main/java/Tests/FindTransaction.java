@@ -44,9 +44,10 @@ public class FindTransaction extends Driver {
     }
 
     public void findTransaction() throws InterruptedException {
-        WebElement element = getDriver().findElement(By.xpath("//a[@href='findtrans.htm' and normalize-space(text())='Find Transactions']"));
+        var wait = new WebDriverWait(getDriver(), Duration.ofSeconds(30));
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='findtrans.htm' and normalize-space(text())='Find Transactions']")));
         element.click();
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
     }
 
     public String[] fillInputs() {
@@ -70,14 +71,14 @@ public class FindTransaction extends Driver {
             element1.clear();
             element1.sendKeys(input);
 
-            var wait = new WebDriverWait(getDriver(), Duration.ofSeconds(20));
+            var wait = new WebDriverWait(getDriver(), Duration.ofSeconds(30));
             var find1 = wait.until(ExpectedConditions.elementToBeClickable(By.id("findById")));
             find1.click();
-            getDriver().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
             if (input.equals("512") || input.equals(id)) {
-                String element2 = getDriver().findElement(By.xpath("//*[@id='errorContainer']/p")).getText();
-                System.out.print(element2 + "\n");
+                Thread.sleep(2000);
+                WebElement element2 = getDriver().findElement(By.xpath("//*[@id='errorContainer']/p"));
+                System.out.print(element2.getText() + "\n");
             } else {
                 String element2 = getDriver().findElement(By.xpath("//*[@id='transactionIdError']")).getText();
                 System.out.print(element2 + "\n");
@@ -103,8 +104,9 @@ public class FindTransaction extends Driver {
             getDriver().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
             if (input.equals(formattedToday)) {
-                String element2 = getDriver().findElement(By.xpath("//*[@id='resultContainer']/h1")).getText();
-                System.out.print(element2 + "\n");
+                var wait1 = new WebDriverWait(getDriver(), Duration.ofSeconds(30));
+                WebElement element2 = wait1.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='resultContainer']/h1")));
+                System.out.print(element2.getText() + "\n");
             } else {
                 String element2 = getDriver().findElement(By.xpath("//*[@id='transactionDateError']")).getText();
                 System.out.print(element2 + "\n");
@@ -133,8 +135,9 @@ public class FindTransaction extends Driver {
             getDriver().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
             if (input.equals(formattedToday)) {
-                String element3 = getDriver().findElement(By.xpath("//*[@id='resultContainer']/h1")).getText();
-                System.out.print(element3 + "\n");
+                var wait2 = new WebDriverWait(getDriver(), Duration.ofSeconds(30));
+                WebElement element3 = wait2.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='resultContainer']/h1")));
+                System.out.print(element3.getText() + "\n");
             } else {
                 String element3 = getDriver().findElement(By.xpath("//*[@id='dateRangeError']")).getText();
                 System.out.print(element3 + "\n");
@@ -160,8 +163,9 @@ public class FindTransaction extends Driver {
             getDriver().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
             if (input.equals("512")) {
-                String element2 = getDriver().findElement(By.xpath("//*[@id='resultContainer']/h1")).getText();
-                System.out.print(element2 + "\n");
+                var wait3 = new WebDriverWait(getDriver(), Duration.ofSeconds(30));
+                WebElement element3 = wait3.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='resultContainer']/h1")));
+                System.out.print(element3.getText() + "\n");
             } else {
                 String element2 = getDriver().findElement(By.xpath("//*[@id='amountError']")).getText();
                 System.out.print(element2 + "\n");

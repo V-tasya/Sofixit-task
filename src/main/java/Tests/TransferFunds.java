@@ -1,13 +1,17 @@
 package Tests;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class TransferFunds extends Driver {
 
@@ -27,7 +31,7 @@ public class TransferFunds extends Driver {
 
         WebElement logIn = getDriver().findElement(By.xpath("//input[@type='submit' and @class='button' and @value='Log In']"));
         logIn.click();
-        getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        getDriver().manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
 
         System.out.println("Test 2 'Transfer Funds'");
     }
@@ -47,12 +51,13 @@ public class TransferFunds extends Driver {
 
             WebElement transfer = getDriver().findElement(By.xpath("//input[@type='submit' and @class='button' and @value='Transfer']"));
             transfer.click();
-            Thread.sleep(3000);
 
             if (input.equals("512") || input.equals("-3") || input.equals("5000")) {
-                String transferOutput = getDriver().findElement(By.xpath("//h1[@class='title' and text()='Transfer Complete!']")).getText();
-                System.out.println("For " + input + " - " + transferOutput);
-            } else if (input.equals("aaa") ||  input.equals("6*/") || input.equals("https://www.goodhousekeeping.com/life/pets/g4531/cutest-dog-breeds/")) {
+                Thread.sleep(2000);
+                WebElement text = getDriver().findElement(By.xpath("//h1[@class='title' and text()='Transfer Complete!']"));
+                System.out.println("For " + input + " - " + text.getText());
+            } else if (input.equals("aaa") || input.equals("6*/") || input.equals("https://www.goodhousekeeping.com/life/pets/g4531/cutest-dog-breeds/")) {
+                Thread.sleep(2000);
                 WebElement errorMessage = getDriver().findElement(By.xpath("//p[@class='error' and contains(text(), 'An internal error has occurred and has been logged')]"));
                 System.out.println("For " + input + " - " + errorMessage.getText());
             }
