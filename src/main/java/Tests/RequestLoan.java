@@ -34,7 +34,7 @@ public class RequestLoan extends Driver {
 
     @Test(priority = 8, dependsOnMethods = "logIn")
     public void requestLoan() throws InterruptedException {
-        String[] inputs = new String[]{"12", "Test", " ", "1a", "Test1", "*", "https://www.goodhousekeeping.com/life/pets/g4531/cutest-dog-breeds/"};
+        String[] inputs = new String[]{"12", "-3", "Test", " ", "1a", "Test1", "*", "https://www.goodhousekeeping.com/life/pets/g4531/cutest-dog-breeds/"};
         String[] fields = new String[]{"amount", "downPayment"};
         for (String input : inputs) {
             var wait =new WebDriverWait(getDriver(), Duration.ofSeconds(30));
@@ -51,7 +51,7 @@ public class RequestLoan extends Driver {
             applyNow.click();
             Thread.sleep(3000);
 
-            if (input.equals("12")) {
+            if (input.equals("12") || input.equals("-3")) {
                 String text = getDriver().findElement(By.xpath("//h1[@class='title' and text()='Loan Request Processed']")).getText();
                 System.out.println("For " + input + " - " + text);
             } else {

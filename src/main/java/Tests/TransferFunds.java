@@ -1,19 +1,11 @@
 package Tests;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
-public class TransferFunds extends Driver {
+public class TransferFunds extends Driver  {
 
     private static final String MOCK_INPUT = "Test";
 
@@ -38,7 +30,7 @@ public class TransferFunds extends Driver {
 
     @Test(priority = 4, dependsOnMethods = "loggin")
     public void transferFunds() throws InterruptedException {
-        String[] inputs = new String[]{"512", "-3", "5000", "aaa", "6*/", "https://www.goodhousekeeping.com/life/pets/g4531/cutest-dog-breeds/"};
+        String[] inputs = new String[]{"512", "-3", " ", "5000", "aaa", "6*/", "https://www.goodhousekeeping.com/life/pets/g4531/cutest-dog-breeds/"};
         for (String input : inputs) {
             WebElement transferFounds = getDriver().findElement(By.xpath("//a[@href ='transfer.htm']"));
             transferFounds.click();
@@ -56,7 +48,7 @@ public class TransferFunds extends Driver {
                 Thread.sleep(2000);
                 WebElement text = getDriver().findElement(By.xpath("//h1[@class='title' and text()='Transfer Complete!']"));
                 System.out.println("For " + input + " - " + text.getText());
-            } else if (input.equals("aaa") || input.equals("6*/") || input.equals("https://www.goodhousekeeping.com/life/pets/g4531/cutest-dog-breeds/")) {
+            } else if (input.equals("aaa") || input.equals("6*/") || input.equals("https://www.goodhousekeeping.com/life/pets/g4531/cutest-dog-breeds/") || input.equals(" ")) {
                 Thread.sleep(2000);
                 WebElement errorMessage = getDriver().findElement(By.xpath("//p[@class='error' and contains(text(), 'An internal error has occurred and has been logged')]"));
                 System.out.println("For " + input + " - " + errorMessage.getText());
